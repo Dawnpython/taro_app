@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Выберите карты</title>
+    <script src="https://st.max.ru/js/max-web-app.js"></script>
     <style>
         body {
             display: flex;
@@ -121,7 +122,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Расширяем WebApp на весь экран
-            Telegram.WebApp.expand();
+            window.WebApp.ready();
 
             // Создаем массив путей к изображениям карт
             const cardImages = Array.from({length: 77}, (_, i) => `card/card${i + 1}.jpg`);
@@ -189,12 +190,23 @@
             }
 
             continueButton.addEventListener('click', () => {
-                // Отправляем выбранные карты в Telegram
-                Telegram.WebApp.sendData(JSON.stringify(selectedCards));
-                Telegram.WebApp.close();
+    // превращаем выбранные карты в payload
+                const payload = selectedCards
+                    .map(c => c.replace("card/card", "").replace(".jpg", ""))
+                    .join("-");
+            
+                // формируем MAX deep link
+                const url = `https://max.ru/YOUR_BOT?start=${payload}`;
+            
+                // открываем MAX ссылку
+                window.WebApp.openMaxLink(url);
+            
+                // закрываем WebApp (если нужно)
+                window.WebApp.close();
+            });
             });
         });
     </script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
 </body>
 </html>
