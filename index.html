@@ -188,7 +188,7 @@
                     continueButton.classList.add('visible'); // Плавное появление кнопки
                 }, 500); // Задержка для плавного исчезновения заголовка
             }
-            window.WebApp.ready();
+            Window.WebApp.ready();
             continueButton.addEventListener('click', () => {
     // превращаем выбранные карты в payload
                 const payload = "cards-" + selectedCards
@@ -200,7 +200,7 @@
             
                 // открываем MAX ссылку
                 // window.WebApp.openMaxLink(url);
-                window.location.href = url;
+                Window.location.href = url;
             
                 // закрываем WebApp (если нужно)
                 
