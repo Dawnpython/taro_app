@@ -190,17 +190,14 @@
             }
             window.WebApp.ready();
             continueButton.addEventListener('click', () => {
-    // превращаем выбранные карты в payload
-                const payload = "cards-" + selectedCards
-                    .map(c => c.match(/\d+/)[0])
-                    .join("-");
-            
-                // формируем MAX deep link
-                const url = `https://max.ru/id344346381135_bot?start=${payload}`;
-            
-                // открываем MAX ссылку
-                // window.WebApp.openMaxLink(url);
-                window.location.href = url;
+                    const payload = "cards-" + selectedCards
+                        .map(c => c.match(/\d+/)[0])
+                        .join("-");
+                
+                    const url = `https://max.ru/id344346381135_bot?start=${encodeURIComponent(payload)}`;
+                
+                    window.WebApp.openMaxLink(url);
+                });
             
                 // закрываем WebApp (если нужно)
                 
