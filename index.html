@@ -122,7 +122,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Расширяем WebApp на весь экран
-            window.WebApp.ready();
+            
 
             // Создаем массив путей к изображениям карт
             const cardImages = Array.from({length: 77}, (_, i) => `card/card${i + 1}.jpg`);
@@ -188,7 +188,7 @@
                     continueButton.classList.add('visible'); // Плавное появление кнопки
                 }, 500); // Задержка для плавного исчезновения заголовка
             }
-
+            window.WebApp.ready();
             continueButton.addEventListener('click', () => {
     // превращаем выбранные карты в payload
                 const payload = selectedCards
