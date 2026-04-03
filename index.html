@@ -122,12 +122,23 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             window.WebApp.ready();
-            const startParam = window.WebApp.initDataUnsafe.start_param;
-
-            if (!startParam) {
-                window.WebApp.close();
-                throw new Error("No start param");
-            }
+             const waitForWebApp = setInterval(() => {
+                const startParamObj = window.WebApp.initDataUnsafe.start_param;
+        
+                if (startParamObj) {
+                    clearInterval(waitForWebApp);
+        
+                    const startParam = startParamObj.value;
+        
+                    console.log("startParam:", startParam);
+        
+                    // если нет payload — закрываем
+                    if (!startParam) {
+                        window.WebApp.close();
+                    }
+        
+                }
+            }, 100);
             
             
 
