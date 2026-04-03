@@ -197,7 +197,7 @@
                 const initData = window.WebApp.initData;
             
                 try {
-                    await fetch('https://irinatarot.zxytgweb.ru/api/selected-cards', {
+                    const res = await fetch('https://irinatarot.zxytgweb.ru/api/selected-cards', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -208,8 +208,12 @@
                         })
                     });
             
-                    
-                    window.WebApp.close();
+                    const data = await res.json();
+                    console.log(data);
+            
+                    if (data.status === "ok") {
+                        window.WebApp.close();
+                    }
             
                 } catch (err) {
                     console.error('Ошибка отправки:', err);
