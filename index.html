@@ -189,15 +189,32 @@
                 }, 500); // Задержка для плавного исчезновения заголовка
             }
             window.WebApp.ready();
-            continueButton.addEventListener('click', () => {
-                    const payload = "cards-" + selectedCards
-                        .map(c => c.match(/\d+/)[0])
-                        .join("-");
-                
-                    const url = `https://max.ru/id344346381135_bot?start=${encodeURIComponent(payload)}`;
-                
-                    window.WebApp.openMaxLink(url);
-                });
+            continueButton.addEventListener('click', async () => {
+                const payload = "cards-" + selectedCards
+                    .map(c => c.match(/\d+/)[0])
+                    .join("-");
+            
+                const initData = window.WebApp.initData;
+            
+                try {
+                    await fetch('https://irinatarot.zxytgweb.ru/api/selected-cards', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            payload: payload,
+                            initData: initData
+                        })
+                    });
+            
+                    
+                    window.WebApp.close();
+            
+                } catch (err) {
+                    console.error('Ошибка отправки:', err);
+                }
+            });
 
         
         });
