@@ -121,16 +121,13 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const startapp = params.get("startapp");
-            if (!startapp) {
-                setTimeout(() => {
-                    window.WebApp?.close?.();
-                    window.WebApp.close();
-                }, 300);
-            
-                throw new Error("Invalid WebApp launch");
+            const startParam = window.WebApp.initDataUnsafe.start_param;
+
+            if (!startParam) {
+                window.WebApp.close();
+                throw new Error("No start param");
             }
+            
             
 
             // Создаем массив путей к изображениям карт
