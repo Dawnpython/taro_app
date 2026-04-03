@@ -121,7 +121,16 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Расширяем WebApp на весь экран
+            const params = new URLSearchParams(window.location.search);
+            const startapp = params.get("startapp");
+            if (!startapp) {
+                setTimeout(() => {
+                    window.WebApp?.close?.();
+                    window.WebApp.close();
+                }, 300);
+            
+                throw new Error("Invalid WebApp launch");
+            }
             
 
             // Создаем массив путей к изображениям карт
@@ -196,8 +205,15 @@
             
                 const initData = window.WebApp.initData;
             
+                // 🎬 включаем состояние загрузки
+                continueButton.disabled = true;
+                continueButton.innerText = "Загрузка...";
+            
+                // можно добавить класс для анимации
+                document.body.classList.add("loading");
+            
                 try {
-                    const res = await fetch('https://irinatarot.zxytgweb.ru/api/selected-cards', {
+                    await fetch('https://irinatarot.zxytgweb.ru/api/selected-cards', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -208,15 +224,19 @@
                         })
                     });
             
-                    const data = await res.json();
-                    console.log(data);
+                    // ⏳ просто ждём 1.5 секунды
+                    await new Promise(resolve => setTimeout(resolve, 1700));
             
-                    if (data.status === "ok") {
-                        window.WebApp.close();
-                    }
+                    // 🚪 закрываем WebApp
+                    window.WebApp.close();
             
                 } catch (err) {
                     console.error('Ошибка отправки:', err);
+            
+                    // даже при ошибке всё равно можно закрыть (если хочешь)
+                    setTimeout(() => {
+                        window.WebApp.close();
+                    }, 1500);
                 }
             });
 
