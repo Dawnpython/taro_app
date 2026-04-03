@@ -121,6 +121,7 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            window.WebApp.ready();
             const startParam = window.WebApp.initDataUnsafe.start_param;
 
             if (!startParam) {
@@ -194,7 +195,7 @@
                     continueButton.classList.add('visible'); // Плавное появление кнопки
                 }, 500); // Задержка для плавного исчезновения заголовка
             }
-            window.WebApp.ready();
+            
             continueButton.addEventListener('click', async () => {
                 const payload = "cards-" + selectedCards
                     .map(c => c.match(/\d+/)[0])
